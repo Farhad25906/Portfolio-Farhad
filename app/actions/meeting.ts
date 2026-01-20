@@ -111,7 +111,7 @@ export async function createMeeting(p0: null, formData: FormData): Promise<{
       success: true,
       message: 'Meeting created successfully!',
       link: meetingLink,
-      meetingId
+      meetingId: meetingId ?? undefined
     }
 
   } catch (error: any) {
