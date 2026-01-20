@@ -14,7 +14,7 @@ export function HeroSection() {
           In my world of{" "}
           <span className="text-blue-500 font-bold">
             <Typewriter
-              words={["React JS", "MERN Stack", "Next JS", "Node JS", "Express JS", "SQL", "NoSQL"]}
+              words={["Web Development", "MERN Stack Development", "Frontend Development", "Backend  Development", "Full Stack Development"]}
               loop={0} // infinite loop
               cursor
               cursorStyle="|"

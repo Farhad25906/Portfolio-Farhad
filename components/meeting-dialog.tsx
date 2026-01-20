@@ -23,6 +23,8 @@ export function MeetingDialog({
     event.preventDefault()
     setLoading(true)
     const formData = new FormData(event.currentTarget)
+    // console.log(formData);
+    
     
     // Call server action
     const res = await createMeeting(null, formData)

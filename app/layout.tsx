@@ -5,6 +5,8 @@ import { Navigation } from "@/components/navigation";
 import { Sidebar } from "@/components/sidebar";
 import { IntroScreen } from "@/components/intro-screen";
 import { Footer } from "@/components/footer";
+import { ThemeToggle } from "@/components/theme-toggle";
+import { FloatingBackground } from "@/components/floating-background";
 import "./globals.css";
 
 const inter = Inter({
@@ -38,6 +40,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
+          <FloatingBackground />
           <IntroScreen />
           <div className="max-w-[1200px] mx-auto min-h-screen flex flex-col lg:flex-row gap-8 p-6 lg:p-10 pt-28 lg:pt-28 relative">
             <Navigation />
@@ -47,6 +50,7 @@ export default function RootLayout({
             </main>
           </div>
           <Footer />
+          <ThemeToggle />
         </ThemeProvider>
       </body>
     </html>
