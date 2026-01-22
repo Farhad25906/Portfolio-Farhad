@@ -24,8 +24,8 @@ export function MeetingDialog({
     setLoading(true)
     const formData = new FormData(event.currentTarget)
     // console.log(formData);
-    
-    
+
+
     // Call server action
     const res = await createMeeting(null, formData)
     setResult(res)
@@ -106,6 +106,14 @@ export function MeetingDialog({
                 />
               </div>
             </div>
+
+            {result?.message && !result.success && (
+              <div className="p-4 bg-red-100 dark:bg-red-900/30 border border-red-300 dark:border-red-800 rounded-xl">
+                <p className="text-red-600 dark:text-red-400 text-sm font-medium">
+                  {result.message}
+                </p>
+              </div>
+            )}
 
             <button
               disabled={loading}

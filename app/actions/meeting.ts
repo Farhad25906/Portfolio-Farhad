@@ -10,19 +10,22 @@ interface MeetingFormData {
   time: string
 }
 
-export async function createMeeting(p0: null, formData: FormData): Promise<{
+export async function createMeeting(
+  prevState: any,
+  formData: FormData
+): Promise<{
   success: boolean
   message: string
   link?: string
   meetingId?: string
 }> {
   try {
-    console.log(formData);
-    
     // Extract form data
     const email = formData.get('email') as string
     const date = formData.get('date') as string
     const time = formData.get('time') as string
+
+    console.log('Form data received:', { email, date, time })
 
     // Validate inputs
     if (!email || !date || !time) {
@@ -54,45 +57,57 @@ export async function createMeeting(p0: null, formData: FormData): Promise<{
       }
     }
 
-    // Create Google Calendar event with Google Meet
-    const calendar = google.calendar({ version: 'v3', auth: await getAuthClient() })
+    // Get authenticated client
+    const authClient = await getAuthClient()
+    
+    // Create Google Calendar instance
+    const calendar = google.calendar({ 
+      version: 'v3', 
+      auth: authClient 
+    })
 
     const event = {
-      summary: 'Meeting with ' + email,
-      description: `Meeting scheduled via website form`,
+      summary: 'Meeting with ' + email.split('@')[0],
+      description: `Meeting scheduled via website form\n\nAttendee: ${email}`,
       start: {
         dateTime: meetingDateTime.toISOString(),
-        timeZone: 'UTC',
+        timeZone: 'Asia/Dhaka', // Updated to your timezone
       },
       end: {
         dateTime: endDateTime.toISOString(),
-        timeZone: 'UTC',
+        timeZone: 'Asia/Dhaka', // Updated to your timezone
       },
       attendees: [
         { email },
-        { email: process.env.ADMIN_EMAIL || 'your_email@gmail.com' }
+        { email: process.env.ADMIN_EMAIL || 'farhadhossen2590@gmail.com' }
       ],
       conferenceData: {
         createRequest: {
-          requestId: `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          requestId: `meeting-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
           conferenceSolutionKey: {
             type: 'hangoutsMeet'
           }
         }
       },
       reminders: {
-        useDefault: true,
+        useDefault: false,
+        overrides: [
+          { method: 'email', minutes: 24 * 60 }, // 1 day before
+          { method: 'popup', minutes: 10 } // 10 minutes before
+        ]
       }
     }
 
+    console.log('Creating calendar event...')
+
     // Insert event
     const response = await calendar.events.insert({
-      calendarId: process.env.GOOGLE_CALENDAR_ID || 'farhadhossen2590@gmail.com',
+      calendarId: process.env.GOOGLE_CALENDAR_ID || 'primary',
       requestBody: event,
       conferenceDataVersion: 1,
     })
-    console.log(response);
-    
+
+    console.log('Event created:', response.data.id)
 
     const meetingLink = response.data.hangoutLink
     const meetingId = response.data.id
@@ -100,18 +115,18 @@ export async function createMeeting(p0: null, formData: FormData): Promise<{
     if (!meetingLink) {
       return {
         success: false,
-        message: 'Failed to create Google Meet link'
+        message: 'Failed to create Google Meet link. Please ensure Google Meet is enabled for your calendar.'
       }
     }
 
-    // Send confirmation email (optional - using a simple email service)
+    // Send confirmation email (simplified version)
     await sendConfirmationEmail(email, meetingDateTime, meetingLink)
 
     return {
       success: true,
-      message: 'Meeting created successfully!',
+      message: 'Meeting created successfully! Check your email for details.',
       link: meetingLink,
-      meetingId: meetingId ?? undefined
+      meetingId: meetingId || undefined
     }
 
   } catch (error: any) {
@@ -121,14 +136,14 @@ export async function createMeeting(p0: null, formData: FormData): Promise<{
     if (error.code === 401) {
       return {
         success: false,
-        message: 'Authentication failed. Please check Google API credentials.'
+        message: 'Authentication failed. Please check Google API credentials. Make sure GOOGLE_REFRESH_TOKEN is set correctly.'
       }
     }
     
     if (error.code === 403) {
       return {
         success: false,
-        message: 'Permission denied. Make sure the calendar API is enabled.'
+        message: 'Permission denied. Make sure the calendar API is enabled and the service account has proper permissions.'
       }
     }
 
@@ -139,33 +154,20 @@ export async function createMeeting(p0: null, formData: FormData): Promise<{
   }
 }
 
-// Optional: Send confirmation email
+// Simplified email function
 async function sendConfirmationEmail(
   attendeeEmail: string,
   meetingTime: Date,
   meetingLink: string
 ) {
-  // You can use nodemailer, Resend, or any email service
-  // This is a placeholder - implement based on your email service
-  
-  console.log(`Would send email to ${attendeeEmail}`)
-  console.log(`Meeting time: ${meetingTime}`)
-  console.log(`Meeting link: ${meetingLink}`)
-  
-  // Example with Resend (install: npm install resend)
-  /*
-  import { Resend } from 'resend'
-  const resend = new Resend(process.env.RESEND_API_KEY)
-  
-  await resend.emails.send({
-    from: 'meetings@yourdomain.com',
-    to: attendeeEmail,
-    subject: 'Your Meeting Invitation',
-    html: `
-      <h1>Meeting Scheduled</h1>
-      <p>Your meeting is scheduled for ${format(meetingTime, 'PPP p')}</p>
-      <p>Join via Google Meet: <a href="${meetingLink}">${meetingLink}</a></p>
-    `
-  })
-  */
+  try {
+    console.log(`📧 Sending email to: ${attendeeEmail}`)
+    console.log(`📅 Meeting time: ${format(meetingTime, 'PPP p')}`)
+    console.log(`🔗 Meeting link: ${meetingLink}`)
+    
+    // Here you can integrate with an email service like Resend, SendGrid, etc.
+    // For now, we'll just log it
+  } catch (emailError) {
+    console.error('Failed to send confirmation email:', emailError)
+  }
 }

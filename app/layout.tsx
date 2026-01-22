@@ -19,9 +19,9 @@ const outfit = Outfit({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "Creative Portfolio | Farhad Hossen",
-  description: "Frontend Developer Portfolio",
+export const metadata = {
+  title: "Farhad Hossen | Web Developer",
+  description: "React & Next.js Developer Portfolio",
 };
 
 export default function RootLayout({
@@ -41,7 +41,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <FloatingBackground />
-          <IntroScreen />
+          {/* <IntroScreen /> */}
           <div className="max-w-[1200px] mx-auto min-h-screen flex flex-col lg:flex-row gap-8 p-6 lg:p-10 pt-28 lg:pt-28 relative">
             <Navigation />
             <Sidebar />

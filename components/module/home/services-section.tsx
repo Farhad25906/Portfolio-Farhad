@@ -2,7 +2,7 @@
 
 import { useState, useEffect, SetStateAction } from "react";
 import { FadeIn } from "@/components/fade-in";
-import { PageHeader } from "./page-header";
+import { SectionHeader } from "../../page-header";
 
 export function ServicesSection() {
   const [activeService, setActiveService] = useState<number | null>(null);
@@ -68,14 +68,12 @@ export function ServicesSection() {
   };
 
   return (
-    <div className="flex flex-col gap-8">
-      <PageHeader
-        title="What I Do"
-        description=""
-        className="mb-0"
+    <div className="space-y-8">
+      <SectionHeader
+        subtitle="Services"
+        title="What I Offer"
       />
-      <FadeIn delay={0.2} className="w-full">
-        {/* Terminal Header */}
+      <FadeIn delay={0.2}>
         <div className="bg-zinc-100 dark:bg-zinc-900 rounded-t-lg border border-zinc-300 dark:border-zinc-800 px-4 py-3 flex items-center gap-2">
           <div className="w-3 h-3 rounded-full bg-red-500"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
@@ -83,9 +81,7 @@ export function ServicesSection() {
           <span className="ml-4 text-zinc-600 dark:text-zinc-400 text-sm font-mono">services.sh</span>
         </div>
 
-        {/* Terminal Body */}
         <div className="bg-white dark:bg-black border-x border-b border-zinc-300 dark:border-zinc-800 rounded-b-lg p-6 font-mono text-sm min-h-[400px]">
-          {/* Command List */}
           <div className="mb-6">
             <div className="text-zinc-600 dark:text-zinc-500 mb-2">$ ls -la services/</div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
@@ -107,7 +103,6 @@ export function ServicesSection() {
             </div>
           </div>
 
-          {/* Active Service Display */}
           <div className="border-t border-zinc-300 dark:border-zinc-800 pt-4">
             {activeService === null ? (
               <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-500 py-8">

@@ -2,13 +2,34 @@
 
 // import { MapPin, Globe, Twitter, Linkedin, Mail, Send, CalendarPlus } from "lucide-react";
 import Link from "next/link";
-import { Linkedin, Github, Mail, Facebook, MapPin, CalendarPlus } from "lucide-react";
-import { useState } from "react";
+import { Linkedin, Github, Mail, Facebook, MapPin, CalendarPlus, } from "lucide-react";
+import { useEffect, useState } from "react";
 import { MeetingDialog } from "./meeting-dialog";
 import { motion } from "framer-motion";
 
+
+
 export function Sidebar() {
   const [isMeetingOpen, setIsMeetingOpen] = useState(false);
+  const [time, setTime] = useState("");
+
+  useEffect(() => {
+    const updateTime = () => {
+      const now = new Date();
+      // Bangladesh timezone offset (+6 UTC)
+      const bdTime = new Date(now.toLocaleString("en-US", { timeZone: "Asia/Dhaka" }));
+      const hours = bdTime.getHours() % 12 || 12;
+      const minutes = bdTime.getMinutes().toString().padStart(2, "0");
+      const ampm = bdTime.getHours() >= 12 ? "PM" : "AM";
+      setTime(`${hours}:${minutes} ${ampm}`);
+    };
+
+    updateTime(); // set immediately
+    const interval = setInterval(updateTime, 1000); // update every second
+
+    return () => clearInterval(interval);
+  }, []);
+
 
   return (
     <>
@@ -30,12 +51,25 @@ export function Sidebar() {
           <h2 className="text-3xl font-display font-bold mb-2 tracking-tight">
             Farhad Hossen
           </h2>
-          <p className="text-muted-foreground font-medium mb-1">
-            Frontend Developer
+          <p className="text-muted-foreground font-medium mb-4">
+            Web Developer
           </p>
-          <p className="text-muted-foreground/80 text-sm mb-6 flex items-center justify-center gap-1">
-            <MapPin className="w-4 h-4" /> Bangladesh
-          </p>
+          <div className="flex items-center justify-center gap-3 mb-6">
+            {/* Open to work */}
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border 
+                      border-border bg-background text-foreground shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-green-500" />
+              <span className="text-sm font-medium">Open to work</span>
+            </div>
+
+            {/* Time */}
+            <div className="flex items-center gap-2 px-4 py-1.5 rounded-full border 
+                      border-border bg-background text-foreground shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-blue-500" />
+              <span className="text-sm font-medium">{time}</span>
+              <span className="text-xs">🇧🇩</span>
+            </div>
+          </div>
           <div className="flex gap-4 mb-8">
             {/* LinkedIn */}
             <Link
