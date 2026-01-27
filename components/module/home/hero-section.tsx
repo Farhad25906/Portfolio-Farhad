@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
@@ -88,12 +89,18 @@ export function HeroSection() {
       </div>
 
       <div className="flex flex-wrap items-center gap-4">
-        <button className="bg-blue-600 text-white rounded-2xl px-6 py-3 hover:bg-blue-700 font-medium transition-colors">
+        <Link
+          href="/contact"
+          className="bg-blue-600 text-white rounded-2xl px-6 py-3 hover:bg-blue-700 font-medium transition-colors"
+        >
           Let's Talk
-        </button>
-        <button className="flex items-center gap-2 text-blue-600 font-medium hover:gap-3 transition-all">
+        </Link>
+        <Link
+          href="/projects"
+          className="flex items-center gap-2 text-blue-600 font-medium hover:gap-3 transition-all"
+        >
           My Work <ArrowRight className="w-5 h-5" />
-        </button>
+        </Link>
       </div>
     </FadeIn>
   );

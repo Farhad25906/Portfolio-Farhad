@@ -1,12 +1,17 @@
 "use client"
 import { FadeIn } from "@/components/fade-in";
-import { ExternalLink, Github, Calendar, Users, Code2 } from "lucide-react";
+import { ExternalLink, Github, Calendar, Users, Code2, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { SectionHeader } from "../../page-header";
 import { useState } from "react";
 import { ProjectModal } from "./ProjectModal";
 
 
-export function ProjectsSection() {
+interface ProjectsSectionProps {
+  limit?: number;
+}
+
+export function ProjectsSection({ limit }: ProjectsSectionProps) {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
   const projects = [
@@ -312,7 +317,7 @@ export function ProjectsSection() {
 
       <FadeIn delay={0.3}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {projects.map((project) => (
+          {projects.slice(0, limit).map((project) => (
             <div
               key={project.id}
               className="group relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden 
@@ -455,6 +460,22 @@ export function ProjectsSection() {
             </div>
           ))}
         </div>
+
+        {limit && (
+          <div className="flex justify-center mt-12">
+            <Link
+              href="/projects"
+              className="group flex items-center gap-2 px-8 py-4 rounded-2xl
+                         bg-white dark:bg-slate-900 border-2 border-blue-600 dark:border-blue-500
+                         text-blue-600 dark:text-blue-400 font-bold text-lg
+                         hover:bg-blue-600 hover:text-white dark:hover:bg-blue-500 dark:hover:text-white
+                         transition-all duration-300 shadow-lg shadow-blue-500/10 hover:shadow-blue-500/25"
+            >
+              See More Projects
+              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        )}
       </FadeIn>
 
       {/* Modal */}

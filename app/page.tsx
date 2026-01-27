@@ -13,7 +13,7 @@ export default function Home() {
       <HeroSection />
       <ToolOrbitSystem />
       <ServicesSection />
-      <ProjectsSection />
+      <ProjectsSection limit={2} />
       <ConversationThreads />
       <FloatingVoices />
     </div>
