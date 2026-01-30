@@ -18,7 +18,7 @@ export function FloatingVoices() {
             avatar: "https://i.ibb.co.com/8yFmPxb/Taspia-Developer.jpg"
         },
         {
-            text: "Farhad thinks like a designer and builds like a developer—his feedback elevated my portfolio.",
+            text: "Farhad thinks like a designer and builds like a developer his feedback elevated my portfolio.",
             author: "Farid Uddin",
             role: "Visualizer",
             company: "NexAura",

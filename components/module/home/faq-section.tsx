@@ -8,7 +8,7 @@ export function ConversationThreads() {
     const threads = [
         {
             question: "What's your approach to building products?",
-            answer: "I believe in starting with the problem, not the solution. Every line of code should serve a purpose—whether that's improving user experience, solving a real pain point, or creating delight. I prototype fast, iterate faster, and always keep accessibility and performance as non-negotiables.",
+            answer: "I believe in starting with the problem, not the solution. Every line of code should serve a purpose whether that's improving user experience, solving a real pain point, or creating delight. I prototype fast, iterate faster, and always keep accessibility and performance as non-negotiables.",
         },
         {
             question: "How do you stay current with tech?",
@@ -16,7 +16,7 @@ export function ConversationThreads() {
         },
         {
             question: "What makes you different?",
-            answer: "I don't just implement designs—I think like a designer. I don't just write code—I architect experiences. The intersection of technical depth and creative vision is where I thrive. I care about the craft, the details, the feeling of the interface.",
+            answer: "I don't just implement designs I think like a designer. I don't just write code I architect experiences. The intersection of technical depth and creative vision is where I thrive. I care about the craft, the details, the feeling of the interface.",
         },
         {
             question: "Can you work with existing teams?",
@@ -24,7 +24,7 @@ export function ConversationThreads() {
         },
         {
             question: "What's your ideal project?",
-            answer: "Something that challenges me technically while mattering to real people. Whether it's a startup MVP, a design system, or an experimental interface—I want to work on things that push boundaries and solve meaningful problems.",
+            answer: "Something that challenges me technically while mattering to real people. Whether it's a startup MVP, a design system, or an experimental interface I want to work on things that push boundaries and solve meaningful problems.",
         }
     ];
 

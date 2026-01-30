@@ -36,7 +36,7 @@ export const HeroPhilosophySection = () => {
                 transition={{ duration: 0.6, delay: 0.3 }}
                 className="text-lg md:text-xl leading-relaxed text-gray-600 dark:text-gray-400"
             >
-                I don't start with code — I start with <span className="text-gray-900 dark:text-gray-100 font-semibold">intent</span>.
+                I don't start with code. I start with <span className="text-gray-900 dark:text-gray-100 font-semibold">intent</span>.
                 Every interface I build is shaped by <span className="text-blue-600 dark:text-blue-400 font-semibold">clarity</span>, <span className="text-blue-600 dark:text-blue-400 font-semibold">performance</span>,
                 and long-term <span className="text-blue-600 dark:text-blue-400 font-semibold">maintainability</span>. I care deeply about how things
                 feel, not just how they function.
