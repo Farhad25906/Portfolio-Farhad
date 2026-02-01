@@ -60,7 +60,7 @@ export default function ContactPage() {
     };
 
     return (
-        <FadeIn className="flex flex-col gap-5">
+        <FadeIn className="flex flex-col gap-5 mt-8">
             <SectionHeader
                 subtitle="Get in Touch"
                 title="I'd Love to Hear From You"

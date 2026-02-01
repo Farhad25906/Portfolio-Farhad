@@ -10,7 +10,7 @@ import { ContributionGraph } from "@/components/module/home/contribution-graph";
 
 export default function Home() {
   return (
-    <div className="space-y-24">
+    <div className="space-y-16">
       <HeroSection />
       <ToolOrbitSystem />
       <ContributionGraph />

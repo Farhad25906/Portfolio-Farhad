@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Plus_Jakarta_Sans, Bricolage_Grotesque } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navigation } from "@/components/navigation";
 import { Sidebar } from "@/components/sidebar";
@@ -9,12 +8,13 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { FloatingBackground } from "@/components/floating-background";
 import "./globals.css";
 
-const inter = Inter({
+
+const sans = Plus_Jakarta_Sans({
   variable: "--font-sans",
   subsets: ["latin"],
 });
 
-const outfit = Outfit({
+const display = Bricolage_Grotesque({
   variable: "--font-display",
   subsets: ["latin"],
 });
@@ -32,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${inter.variable} ${outfit.variable} antialiased bg-background text-foreground`}
+        className={`${sans.variable} ${display.variable} antialiased bg-background text-foreground`}
       >
         <ThemeProvider
           attribute="class"
@@ -42,10 +42,10 @@ export default function RootLayout({
         >
           <FloatingBackground />
           {/* <IntroScreen /> */}
-          <div className="max-w-[1200px] mx-auto min-h-screen flex flex-col lg:flex-row gap-8 p-6 lg:p-10 pt-28 lg:pt-28 relative">
+          <div className="max-w-[1200px] mx-auto min-h-screen flex flex-col lg:flex-row gap-8 p-6 lg:p-10 pt-20 lg:pt-24 relative">
             <Navigation />
             <Sidebar />
-            <main className="flex-1 w-full min-w-0 flex flex-col gap-24 py-10 pb-10">
+            <main className="flex-1 w-full min-w-0 flex flex-col">
               {children}
             </main>
           </div>

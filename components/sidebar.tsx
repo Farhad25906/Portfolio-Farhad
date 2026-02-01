@@ -33,7 +33,7 @@ export function Sidebar() {
 
   return (
     <>
-      <aside className="w-full lg:w-[400px] lg:sticky lg:top-32 h-max mb-10 lg:mb-0 z-40 self-start">
+      <aside className="w-full lg:w-[400px] lg:sticky lg:top-28 h-max mb-10 lg:mb-0 z-40 self-start">
         <motion.div
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}

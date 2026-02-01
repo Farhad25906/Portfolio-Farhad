@@ -3,7 +3,7 @@ import { ProjectsSection } from "@/components/module/projects/projects-section";
 
 export default function ProjectsPage() {
   return (
-    <div className="flex flex-col gap-10">
+    <div className="flex flex-col gap-8 mt-8">
       {/* <PageHeader 
         title="All Projects"
         description="A deep dive into my portfolio of work, ranging from web design to full-stack applications."

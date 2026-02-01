@@ -9,7 +9,7 @@ import { AboutPhilosophy } from "@/components/module/about-me/about-philosophy";
 
 export default function AboutPage() {
   return (
-    <div className="space-y-24">
+    <div className="space-y-16 mt-8">
       <AboutIntro />
       <AboutExpertise />
       <AboutExperience />

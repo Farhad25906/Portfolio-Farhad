@@ -8,7 +8,7 @@ import { ToolsSection } from "@/components/module/skills/ToolsSection";
 
 export default function SkillsPage() {
   return (
-    <div className="space-y-24">
+    <div className="space-y-16 mt-8">
       <HeroPhilosophySection />
       <ToolsSection />
       <ProblemsSection />
