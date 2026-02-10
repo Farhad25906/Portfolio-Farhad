@@ -84,19 +84,19 @@ export function ServicesSection() {
         <div className="bg-white dark:bg-black border-x border-b border-zinc-300 dark:border-zinc-800 rounded-b-lg p-6 font-mono text-sm min-h-[400px]">
           <div className="mb-6">
             <div className="text-zinc-600 dark:text-zinc-500 mb-2">$ ls -la services/</div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
               {services.map((service, index) => (
                 <button
                   key={index}
                   onClick={() => handleServiceClick(index)}
-                  className={`text-left px-4 py-2 rounded transition-all duration-200 ${activeService === index
+                  className={`text-left px-3 py-2 rounded transition-all duration-200 ${activeService === index
                     ? "bg-zinc-200 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700"
                     : "hover:bg-zinc-100 dark:hover:bg-zinc-900 border border-transparent"
                     }`}
                 >
                   <div className="flex items-center gap-2">
                     <span className="text-zinc-500 dark:text-zinc-600">→</span>
-                    <span className="text-blue-600 dark:text-blue-400">{service.command}</span>
+                    <span className="text-blue-600 dark:text-blue-400 text-xs sm:text-sm">{service.command}</span>
                   </div>
                 </button>
               ))}
@@ -140,7 +140,7 @@ export function ServicesSection() {
                       <div className="text-zinc-600 dark:text-zinc-500 text-xs uppercase tracking-wider mb-1">
                         Description
                       </div>
-                      <div className="text-zinc-800 dark:text-zinc-300 leading-relaxed">
+                      <div className="text-zinc-800 dark:text-zinc-300 leading-relaxed text-sm sm:text-base">
                         {typedText}
                         {isTyping && <span className="animate-pulse">▊</span>}
                       </div>

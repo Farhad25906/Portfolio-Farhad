@@ -6,6 +6,7 @@ import { GitBranch, Star } from "lucide-react";
 import { SectionHeader } from "@/components/page-header";
 import { FadeIn } from "@/components/fade-in";
 import { useState } from "react";
+import dayjs from "dayjs";
 
 export const ContributionGraph = () => {
     const { theme } = useTheme();
@@ -138,69 +139,102 @@ export const ContributionGraph = () => {
                         <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-[#155dfc] rounded-br-lg z-10"></div>
 
 
-                        <div className="min-w-[600px]">
-                            <GitHubCalendar
-                                username="Farhad25906"
-                                blockSize={14}
-                                blockMargin={5}
-                                fontSize={14}
-                                colorScheme={theme === 'dark' ? 'dark' : 'light'}
-                                theme={customTheme}
-                                style={{
-                                    color: theme === 'dark' ? '#a1a1aa' : '#71717a',
-                                }}
-                                transformData={(contributions) => {
-                                    calculateStreaks(contributions);
-                                    return contributions;
-                                }}
-                            />
+                        <div className="overflow-x-auto no-scrollbar pb-2">
+                            <div className="min-w-[1000px]">
+                                <GitHubCalendar
+                                    username="Farhad25906"
+                                    labels={{
+                                        totalCount: '{{count}} contributions in this period',
+                                    }}
+                                    blockSize={14}
+                                    blockMargin={6}
+                                    fontSize={14}
+                                    colorScheme={theme === 'dark' ? 'dark' : 'light'}
+                                    theme={customTheme}
+                                    style={{
+                                        color: theme === 'dark' ? '#a1a1aa' : '#71717a',
+                                    }}
+                                    transformData={(contributions) => {
+                                        calculateStreaks(contributions);
+
+                                        // Define the range: 6 months back, current month, 4 months forward (11 months total)
+                                        // This helps center the current month in the view.
+                                        const now = dayjs();
+                                        const startDate = now.subtract(6, 'month').startOf('month');
+                                        const endDate = now.add(4, 'month').endOf('month');
+
+                                        // Create a map of existing contributions for quick lookup
+                                        const contributionMap = new Map();
+                                        contributions.forEach(c => contributionMap.set(c.date, c));
+
+                                        // Generate all dates in the range
+                                        const result = [];
+                                        let current = startDate;
+
+                                        while (current.isBefore(endDate) || current.isSame(endDate)) {
+                                            const dateStr = current.format('YYYY-MM-DD');
+                                            if (contributionMap.has(dateStr)) {
+                                                const activity = contributionMap.get(dateStr);
+                                                result.push(activity);
+                                            } else {
+                                                result.push({
+                                                    date: dateStr,
+                                                    count: 0,
+                                                    level: 0
+                                                });
+                                            }
+                                            current = current.add(1, 'day');
+                                        }
+
+                                        return result as Activity[];
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
 
             <FadeIn delay={0.4}>
-                <div className="mt-8 border-t-4 border-b-4 border-blue-600 dark:border-blue-500 py-6 flex items-center justify-between gap-1">
-                    <div className="flex items-center gap-1">
-                        <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
+                <div className="mt-8 border-t-4 border-b-4 border-blue-600 dark:border-blue-500 py-6 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 sm:gap-10 lg:gap-6">
+                    <div className="flex items-center gap-4 w-full lg:w-auto">
+                        <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 flex items-center justify-center flex-shrink-0">
                             <h3 className="text-3xl font-bold text-white leading-none font-mono">
                                 {streakData.currentStreak}
                             </h3>
                         </div>
                         <div>
-                            <p className="text-xs font-mono text-zinc-600 dark:text-zinc-400 tracking-widest">Current Streak</p>
-                            <p className="text-lg font-bold text-zinc-900 dark:text-white">
-                                CONSECUTIVE DAYS
+                            <p className="text-xs font-mono text-zinc-600 dark:text-zinc-400 tracking-widest uppercase">Current Streak</p>
+                            <p className="text-lg font-bold text-zinc-900 dark:text-white uppercase whitespace-nowrap">
+                                Consecutive Days
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-1">
-                        <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
+                    <div className="flex items-center gap-4 w-full lg:w-auto">
+                        <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 flex items-center justify-center flex-shrink-0">
                             <p className="text-3xl font-bold text-white font-mono">
                                 {streakData.longestStreak}
                             </p>
                         </div>
                         <div>
-                            <p className="text-xs font-mono text-zinc-600 dark:text-zinc-400 tracking-widest">Longest Streak</p>
-                            <p className="text-lg font-bold text-zinc-900 dark:text-white">
-                                PERSONAL BEST
+                            <p className="text-xs font-mono text-zinc-600 dark:text-zinc-400 tracking-widest uppercase">Longest Streak</p>
+                            <p className="text-lg font-bold text-zinc-900 dark:text-white uppercase whitespace-nowrap">
+                                Personal Best
                             </p>
                         </div>
                     </div>
 
-                    <div className="flex items-center gap-1">
-                        <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 flex items-center justify-center">
+                    <div className="flex items-center gap-4 w-full lg:w-auto">
+                        <div className="w-12 h-12 bg-blue-600 dark:bg-blue-500 flex items-center justify-center flex-shrink-0">
                             <p className="text-3xl font-bold text-white font-mono">
                                 {streakData.totalContributions}
                             </p>
                         </div>
                         <div>
-                            <p className="text-xs font-mono text-zinc-600 dark:text-zinc-400 tracking-widest">Total Contributions</p>
-                            <p className="text-lg font-bold text-zinc-900 dark:text-white">
-                                THIS YEAR
+                            <p className="text-xs font-mono text-zinc-600 dark:text-zinc-400 tracking-widest uppercase">Total Contributions</p>
+                            <p className="text-lg font-bold text-zinc-900 dark:text-white uppercase whitespace-nowrap">
+                                This Year
                             </p>
                         </div>
                     </div>

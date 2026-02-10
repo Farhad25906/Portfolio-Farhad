@@ -77,11 +77,11 @@ export function ToolOrbitSystem() {
 
                 {/* Center Content */}
                 <div className="flex flex-col items-center justify-center py-4">
-                    <h2 className="text-3xl lg:text-4xl font-display font-bold text-center">
+                    <h2 className="text-2xl sm:text-3xl lg:text-4xl font-display font-bold text-center">
                         Experienced With All These<br />
                         <span className="text-blue-600 dark:text-blue-400">Tools and Technologies</span>
                     </h2>
-                    <p className="text-muted-foreground text-base mt-2 italic">(and many more)</p>
+                    <p className="text-muted-foreground text-sm sm:text-base mt-2 italic">(and many more)</p>
                 </div>
 
                 {/* Bottom Row - Moving Right */}

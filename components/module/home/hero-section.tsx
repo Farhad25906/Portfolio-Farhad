@@ -36,8 +36,8 @@ export function HeroSection() {
   return (
     <FadeIn className="space-y-8">
       <div className="space-y-6">
-        <h1 className="text-5xl font-display font-bold leading-[1.1] tracking-tight">
-          <span className="text-blue-500 text-2xl block mb-2">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl font-display font-bold leading-[1.1] tracking-tight">
+          <span className="text-blue-500 text-xl sm:text-2xl block mb-2">
             Code. Create. Conquer.
           </span>
           I am Farhad{" "}
@@ -54,7 +54,7 @@ export function HeroSection() {
           </span>
         </h1>
 
-        <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
+        <p className="text-base sm:text-lg text-muted-foreground max-w-2xl leading-relaxed">
           <span
             className={`text-blue-500 font-bold transition-all duration-300
         ${highlight ? "scale-110 drop-shadow-lg" : "scale-100"}
@@ -67,22 +67,22 @@ export function HeroSection() {
         </p>
       </div>
 
-      <div className="flex flex-wrap gap-12 text-sm font-medium">
+      <div className="flex flex-wrap gap-6 sm:gap-12 text-sm font-medium">
         <div className="flex flex-col">
-          <span className="text-5xl font-bold text-foreground">+3</span>
-          <span className="text-xs uppercase tracking-wider mt-1 text-muted-foreground">
+          <span className="text-3xl sm:text-5xl font-bold text-foreground">+3</span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-wider mt-1 text-muted-foreground">
             Years of<br />Experience
           </span>
         </div>
         <div className="flex flex-col">
-          <span className="text-5xl font-bold text-foreground">+20</span>
-          <span className="text-xs uppercase tracking-wider mt-1 text-muted-foreground">
+          <span className="text-3xl sm:text-5xl font-bold text-foreground">+20</span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-wider mt-1 text-muted-foreground">
             Projects<br />Completed
           </span>
         </div>
         <div className="flex flex-col">
-          <span className="text-5xl font-bold text-foreground">+10</span>
-          <span className="text-xs uppercase tracking-wider mt-1 text-muted-foreground">
+          <span className="text-3xl sm:text-5xl font-bold text-foreground">+10</span>
+          <span className="text-[10px] sm:text-xs uppercase tracking-wider mt-1 text-muted-foreground">
             Worldwide<br />Clients
           </span>
         </div>

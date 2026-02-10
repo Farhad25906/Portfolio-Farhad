@@ -2,7 +2,7 @@
 
 // import { MapPin, Globe, Twitter, Linkedin, Mail, Send, CalendarPlus } from "lucide-react";
 import Link from "next/link";
-import { Linkedin, Github, Mail, Facebook, MapPin, CalendarPlus, } from "lucide-react";
+import { Linkedin, Github, Mail, Facebook, MapPin, CalendarPlus, ArrowRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { MeetingDialog } from "./meeting-dialog";
 import { motion } from "framer-motion";
@@ -120,7 +120,7 @@ export function Sidebar() {
             </Link>
           </div>
 
-          <div className="w-full mt-auto flex gap-3 sm:gap-4">
+          {/* <div className="w-full mt-auto flex gap-3 sm:gap-4">
             <button
               onClick={() => setIsMeetingOpen(true)}
               className="w-full min-h-[56px] px-4 sm:px-6 py-4
@@ -137,8 +137,25 @@ export function Sidebar() {
               <span className="whitespace-nowrap">Schedule a Meeting</span>
               <CalendarPlus className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:scale-110" />
             </button>
+          </div> */}
 
-
+          <div className="w-full mt-auto">
+            <Link
+              href="mailto:farhadhossen2590@gmail.com"
+              className="w-full min-h-[56px] px-4 sm:px-6 py-4
+             bg-blue-600 text-white rounded-2xl
+             font-semibold text-sm sm:text-lg
+             flex items-center justify-center gap-2
+             transition-all duration-300
+             hover:bg-blue-700
+             hover:shadow-lg hover:shadow-blue-600/40
+             active:scale-95
+             focus:outline-none focus:ring-2 focus:ring-blue-500/40
+             group"
+            >
+              <span className="whitespace-nowrap">Hire Me</span>
+              <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 transition-transform group-hover:translate-x-1" />
+            </Link>
           </div>
 
         </motion.div>
