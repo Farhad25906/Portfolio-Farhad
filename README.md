@@ -1,24 +1,91 @@
-# Farhad Portfolio
+# 🎨 Farhad Portfolio
 
-A modern, high-performance portfolio website built with **Next.js 16**, **React 19**, and **Tailwind CSS 4**.
+<div align="center">
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-4-38B2AC?style=for-the-badge&logo=tailwind-css" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=for-the-badge&logo=typescript" alt="TypeScript" />
+</div>
 
-## 🚀 Features
+---
 
-- **Dynamic Hero Section**: Interactive introduction with typewriter effects.
-- **Tools Orbit System**: Visualizing technical expertise with smooth animations.
-- **GitHub Contribution Graph**: Showcasing real-time coding activity.
-- **Interactive Project Showcase**: Highlighting key projects with detailed views.
-- **Testimonials Section**: Floating voices and feedback from collaborators.
-- **FAQ System**: Conversation threads for common inquiries.
-- **Light/Dark Mode**: Seamless theme switching using `next-themes`.
-- **Advanced Animations**: Powered by `framer-motion` for a premium feel.
+### 🌐 [Live Demo](https://farhad-hossen.vercel.app/)
 
-## 🛠️ Tech Stack
+A modern, high-performance, and visually stunning portfolio website designed to showcase professional expertise and projects. Built with the latest frontier web technologies for a seamless and premium user experience.
 
-- **Framework**: [Next.js 16 (App Router)](https://nextjs.org/)
-- **UI Library**: [React 19](https://react.dev/)
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+---
+
+## ✨ Features
+
+- **🚀 Dynamic Hero Section**: High-impact introduction with interactive typewriter effects and modern typography.
+- **🪐 Tools Orbit System**: A unique, interactive visualization of technical expertise using sophisticated animations.
+- **📊 GitHub Contribution Graph**: Real-time visualization of coding activity and commitment to open source.
+- **💼 Interactive Project Showcase**: curated gallery of key projects with detailed views and smooth transitions.
+- **💬 Testimonials Section**: Animated feedback system featuring floating voices from collaborators.
+- **❓ Smart FAQ System**: Intuitive conversation-style interface for common inquiries.
+- **🌓 Adaptive Theme**: Seamless light/dark mode switching with polished transitions.
+- **🎭 Motion Design**: Advanced micro-interactions and animations powered by `framer-motion`.
+
+---
+
+## 🛠️ Built With
+
+### Core Architecture
+- **Framework**: [Next.js 16](https://nextjs.org/) (App Router, Static Site Generation)
+- **Engine**: [React 19](https://react.dev/) (Concurrent Mode, Server Components)
+- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strictly Typed)
+
+### UI & Aesthetics
+- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) (Newest JIT engine)
+- **Motion**: [Framer Motion](https://www.framer.com/motion/) (Complex orchestrations)
+- **Component Primitives**: [Radix UI](https://www.radix-ui.com/)
 - **Icons**: [Lucide React](https://lucide.dev/)
-- **Calendar**: [React GitHub Calendar](https://github.com/grubersjoe/react-github-calendar)
 
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Node.js 18.x or higher
+- npm / pnpm / yarn
+
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Farhad25906/Portfolio-Farhad.git
+   cd farhad-portfolio
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+4. **Open in browser**
+   Navigate to `http://localhost:3000` to see the result.
+
+---
+
+## 📁 Project Structure
+
+```text
+├── app/             # Next.js App Router (Pages & Layouts)
+├── components/      # UI Components (Modern & Reusable)
+│   ├── ui/          # Radix & Base components
+│   └── module/      # Feature-specific sections (Hero, Orbit, etc.)
+├── lib/             # Utility functions and shared logic
+├── public/          # Static assets (Images, SVGs)
+└── scripts/         # Automation and helper scripts
+```
+
+---
+
+<p align="center">
+  Developed with ❤️ by Farhad Hossen
+</p>
