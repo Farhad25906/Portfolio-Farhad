@@ -13,6 +13,9 @@
 
 A modern, high-performance, and visually stunning portfolio website designed to showcase professional expertise and projects. Built with the latest frontier web technologies for a seamless and premium user experience.
 
+> [!IMPORTANT]
+> **Notice:** This project is for inspiration and learning purposes. Please do not copy the entire repository for your own use. Respect the original work and use it only as a reference.
+
 ---
 
 ## ✨ Features
