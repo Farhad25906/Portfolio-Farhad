@@ -1,4 +1,18 @@
-# 🎨 Farhad Portfolio
+# 🚀 Farhad Hossen | Professional Portfolio
+
+<p align="center">
+  <img src="public/ProfessionalPIc.png" width="200" style="border-radius: 50%" alt="Farhad Hossen" />
+</p>
+
+<p align="center">
+  <h2 align="center">Full Stack Developer & Creative Engineer</h2>
+</p>
+
+<p align="center">
+  <a href="https://farhad-hossen.vercel.app/"><b>🌐 Portfolio</b></a> •
+  <a href="mailto:your-email@example.com"><b>📧 Contact Me</b></a> •
+  <a href="https://www.linkedin.com/in/farhad-hossen/"><b>🔗 LinkedIn</b></a>
+</p>
 
 <div align="center">
   <img src="https://img.shields.io/badge/Next.js-16-black?style=for-the-badge&logo=next.js" alt="Next.js" />
@@ -9,7 +23,7 @@
 
 ---
 
-### 🌐 [Live Demo](https://farhad-hossen.vercel.app/)
+### � Overview
 
 A modern, high-performance, and visually stunning portfolio website designed to showcase professional expertise and projects. Built with the latest frontier web technologies for a seamless and premium user experience.
 
@@ -18,77 +32,89 @@ A modern, high-performance, and visually stunning portfolio website designed to 
 
 ---
 
-## ✨ Features
+### ✨ Key Features
 
-- **🚀 Dynamic Hero Section**: High-impact introduction with interactive typewriter effects and modern typography.
-- **🪐 Tools Orbit System**: A unique, interactive visualization of technical expertise using sophisticated animations.
-- **📊 GitHub Contribution Graph**: Real-time visualization of coding activity and commitment to open source.
-- **💼 Interactive Project Showcase**: curated gallery of key projects with detailed views and smooth transitions.
-- **💬 Testimonials Section**: Animated feedback system featuring floating voices from collaborators.
-- **❓ Smart FAQ System**: Intuitive conversation-style interface for common inquiries.
-- **🌓 Adaptive Theme**: Seamless light/dark mode switching with polished transitions.
-- **🎭 Motion Design**: Advanced micro-interactions and animations powered by `framer-motion`.
-
----
-
-## 🛠️ Built With
-
-### Core Architecture
-- **Framework**: [Next.js 16](https://nextjs.org/) (App Router, Static Site Generation)
-- **Engine**: [React 19](https://react.dev/) (Concurrent Mode, Server Components)
-- **Language**: [TypeScript](https://www.typescriptlang.org/) (Strictly Typed)
-
-### UI & Aesthetics
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) (Newest JIT engine)
-- **Motion**: [Framer Motion](https://www.framer.com/motion/) (Complex orchestrations)
-- **Component Primitives**: [Radix UI](https://www.radix-ui.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
+- **🚀 Dynamic Hero Section**: High-impact introduction with interactive typewriter effects.
+- **🪐 Tools Orbit System**: Sophisticated `framer-motion` visualization of technical expertise.
+- **📊 Activity Tracking**: Real-time visualization of GitHub contributions.
+- **💼 Project Gallery**: Curated showcase with smooth transitions and detailed views.
+- **💬 Testimonials**: Animated feedback system featuring floating voices.
+- **🌓 Adaptive Theme**: Polished light/dark mode transitions.
+- **📱 Ultra Responsive**: Optimized for every screen size from mobile to ultra-wide.
 
 ---
 
-## 🚀 Getting Started
+### 🛠️ Tech Stack
 
-### Prerequisites
-- Node.js 18.x or higher
-- npm / pnpm / yarn
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/Farhad25906/Portfolio-Farhad.git
-   cd farhad-portfolio
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Run the development server**
-   ```bash
-   npm run dev
-   ```
-
-4. **Open in browser**
-   Navigate to `http://localhost:3000` to see the result.
+<table align="center">
+  <tr>
+    <td align="center" width="200"><b>Core</b></td>
+    <td align="center" width="200"><b>UI & Animation</b></td>
+    <td align="center" width="200"><b>Tools</b></td>
+  </tr>
+  <tr>
+    <td>
+      • Next.js 16<br>
+      • React 19<br>
+      • TypeScript
+    </td>
+    <td>
+      • Tailwind CSS 4<br>
+      • Framer Motion<br>
+      • Radix UI
+    </td>
+    <td>
+      • Git / GitHub<br>
+      • PostCSS<br>
+      • ESLint
+    </td>
+  </tr>
+</table>
 
 ---
 
-## 📁 Project Structure
+### 📈 GitHub Stats
+
+<p align="center">
+  <img src="https://github-readme-stats.vercel.app/api?username=Farhad25906&show_icons=true&theme=transparent&hide_border=true" alt="Farhad's GitHub Stats" />
+  <br/>
+  <img src="https://github-readme-streak-stats.herokuapp.com/?user=Farhad25906&theme=transparent&hide_border=true" alt="GitHub Streak" />
+</p>
+
+---
+
+### � Project Structure
 
 ```text
-├── app/             # Next.js App Router (Pages & Layouts)
-├── components/      # UI Components (Modern & Reusable)
-│   ├── ui/          # Radix & Base components
-│   └── module/      # Feature-specific sections (Hero, Orbit, etc.)
-├── lib/             # Utility functions and shared logic
-├── public/          # Static assets (Images, SVGs)
-└── scripts/         # Automation and helper scripts
+├── app/             # Architecture: Next.js App Router
+├── components/      # Interfaces: Reusable & Modular UI
+│   ├── ui/          # Atomic components (Radix/Tailwind)
+│   └── module/      # Compound components (Hero, Orbit, etc.)
+├── lib/             # Logic: Utilities & Helpers
+├── public/          # Assets: Optimized Media
+└── scripts/         # DevX: Automation
 ```
 
 ---
 
+### 🚀 Setup & Installation
+
+1. **Clone & Enter**
+   ```bash
+   git clone https://github.com/Farhad25906/Portfolio-Farhad.git
+   cd farhad-portfolio
+   ```
+2. **Install**
+   ```bash
+   npm install
+   ```
+3. **Launch**
+   ```bash
+   npm run dev
+   ```
+
+---
+
 <p align="center">
-  Developed with ❤️ by Farhad Hossen
+  Built with ❤️ by <b>Farhad Hossen</b>
 </p>
