@@ -1,11 +1,11 @@
-import { OAuth2Client } from 'google-auth-library'
+import { google } from 'googleapis'
 
 const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID
 const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET
 const GOOGLE_REDIRECT_URI = process.env.GOOGLE_REDIRECT_URI
 const GOOGLE_REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN
 
-export async function getAuthClient(): Promise<OAuth2Client> {
+export async function getAuthClient() {
   // Validate environment variables
   const missingVars = []
   if (!GOOGLE_CLIENT_ID) missingVars.push('GOOGLE_CLIENT_ID')
@@ -20,7 +20,7 @@ export async function getAuthClient(): Promise<OAuth2Client> {
     )
   }
 
-  const oauth2Client = new OAuth2Client(
+  const oauth2Client = new google.auth.OAuth2(
     GOOGLE_CLIENT_ID,
     GOOGLE_CLIENT_SECRET,
     GOOGLE_REDIRECT_URI || 'http://localhost:3000/api/auth/callback/google'
