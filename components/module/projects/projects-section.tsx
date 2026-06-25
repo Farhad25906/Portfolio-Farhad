@@ -581,142 +581,87 @@ export function ProjectsSection({ limit }: ProjectsSectionProps) {
       />
 
       <FadeIn delay={0.3}>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
           {projects.slice(0, limit).map((project) => (
-            <div
-              key={project.id}
-              className="group relative bg-white dark:bg-slate-900 rounded-2xl overflow-hidden 
-                         border border-slate-200 dark:border-slate-700
-                         hover:border-blue-500 dark:hover:border-blue-400
-                         transition-all duration-500 hover:shadow-xl hover:shadow-blue-500/10"
-            >
-              {/* Cover Image */}
-              <div className="relative h-48 w-full overflow-hidden border-b border-slate-200 dark:border-slate-800">
-                <img
-                  src={project.screenshots[0]}
-                  alt={project.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-slate-900/10 dark:bg-slate-900/30 group-hover:bg-transparent transition-colors duration-300" />
+            <div key={project.id} className="group relative flex flex-col bg-white dark:bg-slate-900 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl hover:shadow-blue-500/20">
+              
+              {/* Top Image Section */}
+              <div className="relative h-72 w-full overflow-hidden cursor-pointer" onClick={() => setSelectedProject(project.id)}>
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/90 via-slate-900/40 to-transparent z-10 transition-opacity duration-300 group-hover:opacity-80" />
+                <img src={project.screenshots[0]} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                
+                {/* Category Badge on Image */}
+                <div className="absolute top-4 left-4 z-20">
+                  <span className="px-3 py-1.5 text-xs font-bold tracking-wider uppercase rounded-full bg-blue-500 text-white shadow-lg">
+                    {project.category}
+                  </span>
+                </div>
+                
+                {/* Title over Image */}
+                <div className="absolute bottom-6 left-6 right-6 z-20">
+                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">
+                    {project.title}
+                  </h3>
+                  <p className="text-slate-300 text-sm line-clamp-2">
+                    {project.shortDescription}
+                  </p>
+                </div>
               </div>
 
-              {/* Content wrapper */}
-              <div className="relative p-6">
-                {/* Header */}
-                <div className="flex items-start justify-between mb-6">
-                  <div className="flex-1">
-                    <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full 
-                                  bg-blue-100 dark:bg-blue-900/30 
-                                  border border-blue-200 dark:border-blue-800/50 mb-3">
-                      <div className="w-2 h-2 rounded-full bg-blue-500 dark:bg-blue-400 animate-pulse" />
-                      <span className="text-xs font-semibold text-blue-700 dark:text-blue-300 tracking-wide uppercase">
-                        {project.category}
-                      </span>
-                    </div>
-                    <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-2 
-                                 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                      {project.title}
-                    </h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
-                      {project.shortDescription}
-                    </p>
+              {/* Content Section (Below Image) */}
+              <div className="flex-1 flex flex-col p-6 relative z-20 bg-white dark:bg-slate-900">
+                
+                {/* Floating Stats Bar */}
+                <div className="grid grid-cols-3 gap-2 mb-6 p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 -mt-12 relative z-30 shadow-xl backdrop-blur-md">
+                  <div className="text-center">
+                    <Code2 className="w-5 h-5 mx-auto mb-1 text-blue-600 dark:text-blue-400" />
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">{project.stats.linesOfCode}</div>
+                    <div className="text-[10px] text-slate-500 uppercase tracking-wide">Code</div>
+                  </div>
+                  <div className="text-center border-x border-slate-200 dark:border-slate-700">
+                    <Calendar className="w-5 h-5 mx-auto mb-1 text-blue-600 dark:text-blue-400" />
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">{project.stats.monthsToBuild}</div>
+                    <div className="text-[10px] text-slate-500 uppercase tracking-wide">Time</div>
+                  </div>
+                  <div className="text-center">
+                    <Users className="w-5 h-5 mx-auto mb-1 text-blue-600 dark:text-blue-400" />
+                    <div className="text-xs font-bold text-slate-900 dark:text-white">{project.stats.contributors}</div>
+                    <div className="text-[10px] text-slate-500 uppercase tracking-wide">Devs</div>
                   </div>
                 </div>
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-2 mb-6">
+                <div className="flex flex-wrap gap-2 mb-8">
                   {project.tags.slice(0, 4).map((tag, i) => (
-                    <span
-                      key={i}
-                      className="px-3 py-1.5 text-xs font-medium rounded-lg
-                               bg-slate-100 dark:bg-slate-800 
-                               text-slate-700 dark:text-slate-300
-                               border border-slate-200 dark:border-slate-700"
-                    >
+                    <span key={i} className="px-3 py-1.5 text-xs font-medium rounded-lg bg-blue-50 dark:bg-blue-900/20 text-blue-700 dark:text-blue-300 border border-blue-200/50 dark:border-blue-800/50">
                       {tag}
                     </span>
                   ))}
                   {project.tags.length > 4 && (
-                    <span className="px-3 py-1.5 text-xs font-medium rounded-lg
-                                   bg-blue-50 dark:bg-blue-900/20 
-                                   text-blue-600 dark:text-blue-400
-                                   border border-blue-200 dark:border-blue-800/50">
-                      +{project.tags.length - 4} more
+                    <span className="px-3 py-1.5 text-xs font-medium rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                      +{project.tags.length - 4}
                     </span>
                   )}
                 </div>
 
-                {/* Stats */}
-                {/* Stats */}
-                <div className="grid grid-cols-3 gap-2 mb-6 p-3 rounded-xl 
-                              bg-slate-50 dark:bg-slate-800/50 
-                              border border-slate-200 dark:border-slate-700">
-                  <div className="text-center">
-                    <Code2 className="w-4 h-4 mx-auto mb-1 text-blue-600 dark:text-blue-400" />
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">
-                      {project.stats.linesOfCode}
-                    </div>
-                  </div>
-                  <div className="text-center border-x border-slate-200 dark:border-slate-700">
-                    <Calendar className="w-4 h-4 mx-auto mb-1 text-blue-600 dark:text-blue-400" />
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">
-                      {project.stats.monthsToBuild}
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <Users className="w-4 h-4 mx-auto mb-1 text-blue-600 dark:text-blue-400" />
-                    <div className="text-xs font-bold text-slate-900 dark:text-white">
-                      {project.stats.contributors}
-                    </div>
-                  </div>
-                </div>
-
-                {/* Action buttons */}
-                <div className="flex gap-3 mt-auto">
+                {/* Action Buttons */}
+                <div className="flex items-center gap-3 mt-auto">
                   <button
                     onClick={() => setSelectedProject(project.id)}
-                    className="flex-1 px-4 py-3 rounded-xl font-semibold text-sm
-                             bg-blue-600 hover:bg-blue-700
-                             text-white shadow-lg shadow-blue-500/20
-                             transition-all duration-300 hover:-translate-y-0.5
-                             flex items-center justify-center gap-2 group/btn"
+                    className="flex-1 px-4 py-3 rounded-xl font-bold text-sm bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-500/25 transition-all duration-300 flex items-center justify-center gap-2 group/btn"
                   >
                     View Details
-                    <ExternalLink className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
+                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
                   </button>
-
+                  
                   {project.liveLink !== "#" && (
-                    <a
-                      href={project.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 rounded-xl font-semibold text-sm
-                               bg-white dark:bg-slate-800
-                               text-slate-600 dark:text-slate-400
-                               border-2 border-slate-200 dark:border-slate-700
-                               hover:border-blue-600 dark:hover:border-blue-500
-                               hover:text-blue-600 dark:hover:text-blue-400
-                               transition-all duration-300 hover:-translate-y-0.5"
-                      title="Live Preview"
-                    >
+                    <a href={project.liveLink} target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 border border-slate-200 dark:border-slate-700 transition-colors" title="Live Preview">
                       <ExternalLink className="w-5 h-5" />
                     </a>
                   )}
-
+                  
                   {project.clientRepo !== "#" && (
-                    <a
-                      href={project.clientRepo}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="p-3 rounded-xl font-semibold text-sm
-                               bg-white dark:bg-slate-800
-                               text-slate-600 dark:text-slate-400
-                               border-2 border-slate-200 dark:border-slate-700
-                               hover:border-blue-600 dark:hover:border-blue-500
-                               hover:text-blue-600 dark:hover:text-blue-400
-                               transition-all duration-300 hover:-translate-y-0.5"
-                      title="Source Code"
-                    >
+                    <a href={project.clientRepo} target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-blue-900/30 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 border border-slate-200 dark:border-slate-700 transition-colors" title="Source Code">
                       <Github className="w-5 h-5" />
                     </a>
                   )}
