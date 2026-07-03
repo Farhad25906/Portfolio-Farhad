@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 
 export function IntroScreen() {
   const [isVisible, setIsVisible] = useState(true);
-
+/*
+Intro Screen Design It Hides After 3 Miniutes 
+*/
   useEffect(() => {
     // Hide intro after 3.5 seconds
     const timer = setTimeout(() => {
