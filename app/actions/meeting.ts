@@ -1,17 +1,143 @@
 'use server'
 
 import { google } from 'googleapis'
-import { format } from 'date-fns'
 import { getAuthClient } from '@/lib/google-auth'
 
-interface MeetingFormData {
-  email: string
-  date: string
-  time: string
+const TIME_ZONE = 'Asia/Dhaka'
+const TIME_ZONE_OFFSET = '+06:00'
+const MEETING_DURATION_MINUTES = 60
+const SLOT_STEP_MINUTES = 30
+const WORK_DAY_START_HOUR = 9
+const WORK_DAY_END_HOUR = 18
+const DEFAULT_CALENDAR_ID = process.env.GOOGLE_CALENDAR_ID || 'primary'
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'farhadhossen2590@gmail.com'
+
+interface MeetingSlot {
+  value: string
+  label: string
+}
+
+function buildDhakaDateTime(date: string, time: string) {
+  return new Date(`${date}T${time.length === 5 ? `${time}:00` : time}${TIME_ZONE_OFFSET}`)
+}
+
+function getDhakaDayBounds(date: string) {
+  return {
+    start: new Date(`${date}T00:00:00${TIME_ZONE_OFFSET}`),
+    end: new Date(`${date}T23:59:59${TIME_ZONE_OFFSET}`),
+  }
+}
+
+function getCalendarId() {
+  return DEFAULT_CALENDAR_ID
+}
+
+function formatSlotLabel(slot: Date) {
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: TIME_ZONE,
+  }).format(slot)
+}
+
+async function getBusyIntervals(date: string) {
+  const authClient = await getAuthClient()
+  const calendar = google.calendar({
+    version: 'v3',
+    auth: authClient,
+  })
+
+  const { start, end } = getDhakaDayBounds(date)
+  const calendarId = getCalendarId()
+  const response = await calendar.freebusy.query({
+    requestBody: {
+      timeMin: start.toISOString(),
+      timeMax: end.toISOString(),
+      items: [{ id: calendarId }],
+    },
+  })
+
+  const busy = response.data.calendars?.[calendarId]?.busy ?? []
+  return busy.map((interval) => ({
+    start: new Date(interval.start ?? start.toISOString()),
+    end: new Date(interval.end ?? end.toISOString()),
+  }))
+}
+
+function generateSlots(date: string, busyIntervals: Array<{ start: Date; end: Date }>): MeetingSlot[] {
+  const slots: MeetingSlot[] = []
+  const now = new Date()
+
+  for (let hour = WORK_DAY_START_HOUR; hour < WORK_DAY_END_HOUR; hour += 1) {
+    for (const minute of [0, SLOT_STEP_MINUTES]) {
+      if (hour === WORK_DAY_END_HOUR - 1 && minute > 0) {
+        continue
+      }
+
+      const time = `${String(hour).padStart(2, '0')}:${String(minute).padStart(2, '0')}`
+      const slotStart = buildDhakaDateTime(date, time)
+      const slotEnd = new Date(slotStart.getTime() + MEETING_DURATION_MINUTES * 60 * 1000)
+
+      if (slotStart <= now) {
+        continue
+      }
+
+      const overlaps = busyIntervals.some((interval) => slotStart < interval.end && slotEnd > interval.start)
+      if (!overlaps) {
+        slots.push({
+          value: time,
+          label: formatSlotLabel(slotStart),
+        })
+      }
+    }
+  }
+
+  return slots
+}
+
+export async function getAvailableMeetingSlots(date: string): Promise<{
+  success: boolean
+  message: string
+  slots: MeetingSlot[]
+}> {
+  try {
+    if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
+      return {
+        success: false,
+        message: 'Please choose a valid date.',
+        slots: [],
+      }
+    }
+
+    const busyIntervals = await getBusyIntervals(date)
+    const slots = generateSlots(date, busyIntervals)
+
+    if (!slots.length) {
+      return {
+        success: false,
+        message: 'No free one-hour slots are open for that day. Please choose another date.',
+        slots: [],
+      }
+    }
+
+    return {
+      success: true,
+      message: 'Available times loaded successfully.',
+      slots,
+    }
+  } catch (error: unknown) {
+    console.error('Error checking meeting availability:', error)
+    return {
+      success: true,
+      message: 'Could not verify your calendar right now, so I am showing the default working hours instead.',
+      slots: generateSlots(date, []),
+    }
+  }
 }
 
 export async function createMeeting(
-  prevState: any,
+  _prevState: unknown,
   formData: FormData
 ): Promise<{
   success: boolean
@@ -20,14 +146,10 @@ export async function createMeeting(
   meetingId?: string
 }> {
   try {
-    // Extract form data
     const email = formData.get('email') as string
     const date = formData.get('date') as string
     const time = formData.get('time') as string
 
-    console.log('Form data received:', { email, date, time })
-
-    // Validate inputs
     if (!email || !date || !time) {
       return {
         success: false,
@@ -35,7 +157,6 @@ export async function createMeeting(
       }
     }
 
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     if (!emailRegex.test(email)) {
       return {
@@ -44,12 +165,9 @@ export async function createMeeting(
       }
     }
 
-    // Parse date and time
-    const meetingDateTime = new Date(`${date}T${time}`)
-    const endDateTime = new Date(meetingDateTime)
-    endDateTime.setHours(endDateTime.getHours() + 1) // 1 hour meeting
+    const meetingDateTime = buildDhakaDateTime(date, time)
+    const endDateTime = new Date(meetingDateTime.getTime() + MEETING_DURATION_MINUTES * 60 * 1000)
 
-    // Check if date is in the future
     if (meetingDateTime < new Date()) {
       return {
         success: false,
@@ -57,33 +175,47 @@ export async function createMeeting(
       }
     }
 
-    // Get authenticated client
+    const availability = await getAvailableMeetingSlots(date)
+    if (!availability.success) {
+      return {
+        success: false,
+        message: availability.message,
+      }
+    }
+
+    const selectedTimeAvailable = availability.slots.some((slot) => slot.value === time)
+    if (!selectedTimeAvailable) {
+      return {
+        success: false,
+        message: 'That time is no longer free. Please choose another available slot.',
+      }
+    }
+
     const authClient = await getAuthClient()
-    
-    // Create Google Calendar instance
-    const calendar = google.calendar({ 
-      version: 'v3', 
-      auth: authClient 
+
+    const calendar = google.calendar({
+      version: 'v3',
+      auth: authClient
     })
 
     const event = {
-      summary: 'Meeting with ' + email.split('@')[0],
+      summary: `Meeting with ${email.split('@')[0]}`,
       description: `Meeting scheduled via website form\n\nAttendee: ${email}`,
       start: {
         dateTime: meetingDateTime.toISOString(),
-        timeZone: 'Asia/Dhaka', // Updated to your timezone
+        timeZone: TIME_ZONE,
       },
       end: {
         dateTime: endDateTime.toISOString(),
-        timeZone: 'Asia/Dhaka', // Updated to your timezone
+        timeZone: TIME_ZONE,
       },
       attendees: [
         { email },
-        { email: process.env.ADMIN_EMAIL || 'farhadhossen2590@gmail.com' }
+        { email: ADMIN_EMAIL }
       ],
       conferenceData: {
         createRequest: {
-          requestId: `meeting-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+          requestId: `meeting-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`,
           conferenceSolutionKey: {
             type: 'hangoutsMeet'
           }
@@ -98,49 +230,52 @@ export async function createMeeting(
       }
     }
 
-    console.log('Creating calendar event...')
-
-    // Insert event
     const response = await calendar.events.insert({
-      calendarId: process.env.GOOGLE_CALENDAR_ID || 'primary',
+      calendarId: getCalendarId(),
       requestBody: event,
       conferenceDataVersion: 1,
+      sendUpdates: 'all',
     })
-
-    console.log('Event created:', response.data.id)
 
     const meetingLink = response.data.hangoutLink
     const meetingId = response.data.id
+    const fallbackLink = response.data.conferenceData?.entryPoints?.find(
+      (entry) => entry.entryPointType === 'video'
+    )?.uri
 
-    if (!meetingLink) {
+    const finalMeetingLink = meetingLink || fallbackLink
+
+    if (!finalMeetingLink) {
       return {
         success: false,
         message: 'Failed to create Google Meet link. Please ensure Google Meet is enabled for your calendar.'
       }
     }
 
-    // Send confirmation email (simplified version)
-    await sendConfirmationEmail(email, meetingDateTime, meetingLink)
-
     return {
       success: true,
-      message: 'Meeting created successfully! Check your email for details.',
-      link: meetingLink,
+      message: `Meeting created successfully! Google Calendar has sent the invite to ${email} and ${ADMIN_EMAIL}.`,
+      link: finalMeetingLink,
       meetingId: meetingId || undefined
     }
 
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('Error creating meeting:', error)
-    
-    // Handle specific Google API errors
-    if (error.code === 401) {
+
+    const code =
+      typeof error === 'object' && error !== null && 'code' in error
+        ? (error as { code?: number }).code
+        : undefined
+    const message = error instanceof Error ? error.message : 'Failed to create meeting. Please try again.'
+
+    if (code === 401) {
       return {
         success: false,
         message: 'Authentication failed. Please check Google API credentials. Make sure GOOGLE_REFRESH_TOKEN is set correctly.'
       }
     }
     
-    if (error.code === 403) {
+    if (code === 403) {
       return {
         success: false,
         message: 'Permission denied. Make sure the calendar API is enabled and the service account has proper permissions.'
@@ -149,25 +284,7 @@ export async function createMeeting(
 
     return {
       success: false,
-      message: error.message || 'Failed to create meeting. Please try again.'
+      message
     }
-  }
-}
-
-// Simplified email function
-async function sendConfirmationEmail(
-  attendeeEmail: string,
-  meetingTime: Date,
-  meetingLink: string
-) {
-  try {
-    console.log(`📧 Sending email to: ${attendeeEmail}`)
-    console.log(`📅 Meeting time: ${format(meetingTime, 'PPP p')}`)
-    console.log(`🔗 Meeting link: ${meetingLink}`)
-    
-    // Here you can integrate with an email service like Resend, SendGrid, etc.
-    // For now, we'll just log it
-  } catch (emailError) {
-    console.error('Failed to send confirmation email:', emailError)
   }
 }
